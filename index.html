@@ -48,7 +48,7 @@
             cursor: pointer;
         }
         .product img {
-            max-width: 100%; /* Ensures image stays within container */
+            max-width: 70%; /* Ensures image stays within container */
             height: auto; /* Maintains aspect ratio */
             border-radius: 5px;
             transition: transform 0.3s ease;
@@ -140,7 +140,7 @@
     <div class="container">
         <!-- Wireless Headphones Product -->
         <div class="product" onclick="location.href='Wireless Headphone.html';">
-            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/9827/50141/dc21167b780339c35138099f6d2eaf8f__93089.1671701941.jpg?c=2" alt="Wireless Headphones">
+            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/9827/50141/dc21167b780339c35138099f6d2eaf8f__93089.1671701941.jpg?c=2?imbypass=on" alt="Wireless Headphones">
             <div class="product-details">
                 <h2 class="product-title">Wireless Controller </h2>
                 <p class="product-description">High-quality wireless controller with long battery life.</p>
@@ -148,9 +148,9 @@
             </div>
         </div>
 
-        <!-- RGB Mouse Product -->
+        <!-- Fast Charger Product -->
         <div class="product" onclick="location.href='Rgbmouse.html';">
-            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/15920/65234/629f20ca2d1748068bf3b351642251ce-31383__12571.1693317346.jpg?c=2" alt="RGB Mouse JM-530">
+            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/15920/65234/629f20ca2d1748068bf3b351642251ce-31383__12571.1693317346.jpg?c=2?imbypass=on" alt="RGB Mouse JM-530">
             <div class="product-details">
                 <h2 class="product-title">RGB Mouse JM-530 </h2>
                 <p class="product-description">Wired RGB gaming mouse.</p>
@@ -160,7 +160,7 @@
 
         <!-- Mechanical Keyboard Product -->
         <div class="product" onclick="location.href='MechanicalKeyboard.html';">
-            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/20976/74891/PRODUCT_IMAGE__30588.1705509978.jpg?c=2" alt="Mechanical Keyboard">
+            <img src="https://cdn11.bigcommerce.com/s-sp9oc95xrw/images/stencil/1280x1280/products/20976/74891/PRODUCT_IMAGE__30588.1705509978.jpg?c=2?imbypass=on" alt="Mechanical Keyboard">
             <div class="product-details">
                 <h2 class="product-title">Mechanical Keyboard </h2>
                 <p class="product-description">Enjoy a smooth and responsive typing experience with this mechanical keyboard.</p>
@@ -175,15 +175,33 @@
             input = document.getElementById('searchInput');
             filter = input.value.toUpperCase();
             products = document.getElementsByClassName('product');
+            var found = false; // Flag to track if any products are found
 
             for (i = 0; i < products.length; i++) {
                 product = products[i];
-                title = product.getElementsByClassName('product-title')[0];
+                title = product.querySelector('.product-title'); // Use querySelector to find title
                 txtValue = title.textContent || title.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    product.style.display = '';
+                    product.style.display = ''; // Show matching product
+                    found = true; // Mark as found if at least one product matches
                 } else {
-                    product.style.display = 'none';
+                    product.style.display = 'none'; // Hide non-matching product
+                }
+            }
+
+            // Show or hide "Item not found" message based on found flag
+            var notFoundMessage = document.getElementById('notFoundMessage');
+            if (!found) {
+                // Create "Item not found" message if it doesn't exist
+                if (!notFoundMessage) {
+                    var container = document.querySelector('.container');
+                    container.innerHTML += '<div id="notFoundMessage" class="about-section"><h2>Item not found</h2></div>';
+                } else {
+                    notFoundMessage.style.display = 'block'; // Show message if no products are found
+                }
+            } else {
+                if (notFoundMessage) {
+                    notFoundMessage.style.display = 'none'; // Hide message if products are found
                 }
             }
         }
